@@ -54,7 +54,22 @@
 
     <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <!-- This would set the toolbar's background color -->
-        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:background">@color/md_black_1000</item>
+        <!-- android:textColorPrimary is the color of the title text in the Toolbar  -->
+        <item name="android:textColorPrimary">@android:color/holo_blue_light</item>
+        <!-- android:actionMenuTextColor is the color of the text of action (menu) items  -->
+        <item name="actionMenuTextColor">@android:color/holo_green_light</item>
+        <!-- Enable these below if you want clicking icons to trigger a ripple effect -->
+        <!--
+        <item name="selectableItemBackground">?android:selectableItemBackground</item>
+        <item name="selectableItemBackgroundBorderless">?android:selectableItemBackground</item>
+        -->
+    </style>
+
+
+    <style name="DrawerTheme">
+        <!-- This would set the toolbar's background color -->
+        <item name="android:background">@color/md_black_1000</item>
         <!-- android:textColorPrimary is the color of the title text in the Toolbar  -->
         <item name="android:textColorPrimary">@android:color/holo_blue_light</item>
         <!-- android:actionMenuTextColor is the color of the text of action (menu) items  -->

@@ -1,11 +1,12 @@
 package br.nauber.flickrbrowser;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.facebook.drawee.view.SimpleDraweeView;
+
 
 public class ViewPhotoDetailsActivity extends BaseActivity {
 
@@ -15,7 +16,8 @@ public class ViewPhotoDetailsActivity extends BaseActivity {
         setContentView(R.layout.activity_view_photo_details);
 
         Toolbar toolbar = activateToolBar();
-        activateToolbarWithHomeEnabled();
+        setUpDrawer();
+
 
 
         Photo photo = (Photo) getIntent().getSerializableExtra(PHOTO_TRANSFER);
@@ -33,8 +35,12 @@ public class ViewPhotoDetailsActivity extends BaseActivity {
             photoAuthor.setText(photo.getmAuthor());
 
 
-            ImageView photoImage = (ImageView) findViewById(R.id.photo_image);
-            Picasso.with(this).load(photo.getmImage()).error(R.drawable.placeholder).into(photoImage);
+
+
+            Uri uri = Uri.parse(photo.getmImage());
+            SimpleDraweeView draweeView = (SimpleDraweeView) findViewById(R.id.photo_image);
+            draweeView.setImageURI(uri);
+
         }
 
 

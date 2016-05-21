@@ -6,39 +6,36 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
 
 
-public class SearchActivity extends BaseActivity {
+public class SearchActivity extends BaseListVideoActivity{
 
     private SearchView mSearchView;
-    private RecyclerView mRecyclerView;
-    private FlickrRecyclerViewAdapter mFlickrRecyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_search);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        activateToolbarWithHomeEnabled();
+        setUp();
 
-//
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
+        String key= getSavedPreferenceData(YOUTUBE_QUERY);;
+
+        if(key.length()==0){
+            key="marvel";
+        }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_search, menu);
-        final MenuItem searchItem=menu.findItem(R.id.seach_view);
-        mSearchView=(SearchView) searchItem.getActionView();
-        SearchManager searchManager=(SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
+        ProcessProcessVideos processProcessPhotos = new ProcessProcessVideos(key, true);
+        processProcessPhotos.execute();
+
+        Toolbar toolbar = activateToolBar();
+
+        mSearchView=(SearchView) findViewById(R.id.searchautocomplete);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         mSearchView.setIconified(false);
         mSearchView.setQueryHint("Enter the photo tag");
@@ -47,15 +44,19 @@ public class SearchActivity extends BaseActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                sharedPreferences.edit().putString(FLICKR_QUERY, query).commit();
+                sharedPreferences.edit().putString(YOUTUBE_QUERY, query).commit();
                 mSearchView.clearFocus();
+                //goToMain();
                 finish();
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
+            public boolean onQueryTextChange(String newText)
+            {
+                ProcessProcessVideos processProcessPhotos = new ProcessProcessVideos(newText, true);
+                processProcessPhotos.execute();
+                return true;
             }
         });
         mSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
@@ -66,6 +67,18 @@ public class SearchActivity extends BaseActivity {
                 return false;
             }
         });
+
+
+    }
+
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+
         return true;
     }
 

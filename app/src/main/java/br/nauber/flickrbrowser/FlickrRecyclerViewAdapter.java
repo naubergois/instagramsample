@@ -1,5 +1,6 @@
 package br.nauber.flickrbrowser;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,20 +17,29 @@ import java.util.List;
 public class FlickrRecyclerViewAdapter extends RecyclerView.Adapter<FlickrImageViewHolder> {
     private List<Photo> photoList;
     private Context mContext;
+    Activity activity;
 
-    public FlickrRecyclerViewAdapter(List<Photo> photoList, Context mContext) {
+    public FlickrRecyclerViewAdapter(List<Photo> photoList, Context mContext,Activity activity) {
         this.photoList = photoList;
         this.mContext = mContext;
+        this.activity=activity;
     }
 
     @Override
     public void onBindViewHolder(FlickrImageViewHolder holder, int position) {
         Photo item = photoList.get(position);
+        //Toast.makeText(null," teste "+item.getmTitle()+ " ",Toast.LENGTH_LONG).show();
+
         Picasso.with(mContext).load(item.getmImage()).error(R.drawable.placeholder).into(holder.thumbnail);
 
+//        Uri uri = Uri.parse(item.getmImage());
+//        SimpleDraweeView draweeView = (SimpleDraweeView) activity.findViewById(R.id.thumbnail);
+//        draweeView.setImageURI(uri);
 
-        holder.title.setText(item.getmTitle());
-        holder.title.setBackground(holder.thumbnail.getDrawable());
+
+
+        holder.title.setText(item.getmImage());
+        //holder.title.setBackground(holder.thumbnail.getDrawable());
 //        holder.tags.setText(item.getmTags());
 
     }

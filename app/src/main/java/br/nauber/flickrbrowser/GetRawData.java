@@ -71,6 +71,7 @@ public class GetRawData {
             }else{
                 mDownloadStatus=DownLoadStatus.OK;
             }
+            Log.v(LOG_TAG,"DownLoadStatus: "+mDownloadStatus);
         }
 
 
@@ -114,7 +115,7 @@ public class GetRawData {
                 }
                 if (reader!=null){
                     try{
-                    reader.close();
+                        reader.close();
                     }catch (final IOException e){
                         Log.e(LOG_TAG,"Error closing stream",e);
                     }
