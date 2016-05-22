@@ -3,9 +3,9 @@
     android:layout_height="match_parent">
 
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+    <!--<include-->
+        <!--android:id="@+id/toolbar"-->
+        <!--layout="@layout/toolbar" />-->
 
 
     <WebView
@@ -14,10 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"></WebView>
 
-    <include layout="@layout/leftbar"
-        android:layout_below="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <!--<include layout="@layout/leftbar"-->
+        <!--android:layout_below="@+id/toolbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"/>-->
 
 
 </RelativeLayout>

@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">"Flickr Nauber"</string>
+    <string name="app_name">"Omelete"</string>
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
     <string name="title_activity_search">Search by tag</string>
     <string name="title_activity_view_photo_details">Photo detail</string>
     <string name="title_activity_maps">Map</string>
-    <string name="title_activity_you_tube_list">YouTubeListActivity</string>
+    <string name="title_activity_you_tube_list">Omelete</string>
     <string name="title_activity_view_video_detail">ViewVideoDetail</string>
     <string name="title_activity_web">WebActivity</string>
     <string name="title_activity_video_web">VideoWebActivity</string>

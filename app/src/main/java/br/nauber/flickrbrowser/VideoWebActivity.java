@@ -1,7 +1,6 @@
 package br.nauber.flickrbrowser;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.webkit.WebView;
 
 public class VideoWebActivity extends BaseVideoActivity {
@@ -10,7 +9,7 @@ public class VideoWebActivity extends BaseVideoActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_web);
-        Toolbar toolbar = activateToolBar();
+//        Toolbar toolbar = activateToolBar();
 
 
         Video video = (Video) getIntent().getSerializableExtra("VIDEO_TRANSFER");

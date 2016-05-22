@@ -20,12 +20,11 @@ public class SearchActivity extends BaseListVideoActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_search);
         setUp();
+        setUpDrawer();
 
         String key= getSavedPreferenceData(YOUTUBE_QUERY);;
 
-        if(key.length()==0){
-            key="marvel";
-        }
+
 
 
 
@@ -38,7 +37,7 @@ public class SearchActivity extends BaseListVideoActivity{
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         mSearchView.setIconified(false);
-        mSearchView.setQueryHint("Enter the photo tag");
+        mSearchView.setQueryHint("Digite o que deseja buscar");
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
@@ -46,7 +45,7 @@ public class SearchActivity extends BaseListVideoActivity{
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 sharedPreferences.edit().putString(YOUTUBE_QUERY, query).commit();
                 mSearchView.clearFocus();
-                //goToMain();
+                goToMainWithSearch();
                 finish();
                 return false;
             }

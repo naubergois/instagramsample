@@ -123,6 +123,7 @@ public class BaseActivity extends AppCompatActivity {
     public void goToMain() {
         Intent openMainActivity = new Intent(getApplicationContext(), MainActivity.class);
         openMainActivity.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        openMainActivity.putExtra("search",false);
         startActivity(openMainActivity);
     }
 

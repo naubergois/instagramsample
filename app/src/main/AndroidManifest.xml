@@ -25,6 +25,7 @@
         <activity
             android:name=".SearchActivity"
             android:label="@string/title_activity_search"
+            android:launchMode="singleTop"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme">
             <meta-data
@@ -61,6 +62,7 @@
         <activity
             android:name=".YouTubeListActivity"
             android:label="@string/title_activity_you_tube_list"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -75,10 +77,12 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".WebActivity"
+            android:launchMode="singleTop"
             android:label="@string/title_activity_web"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".VideoWebActivity"
+            android:launchMode="singleTop"
             android:label="@string/title_activity_video_web"
             android:theme="@style/AppTheme"></activity>
     </application>
