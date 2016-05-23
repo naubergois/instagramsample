@@ -1,12 +1,19 @@
 package br.nauber.flickrbrowser;
 
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,7 +52,6 @@ public class YouTubeConnectorToday extends YouTubeConnector {
         final String KEY_PARAM = "key";
 
 
-
         Uri myDestinationURI = Uri.parse(YOUTUBE_API_BASE_URL).buildUpon()
                 .appendQueryParameter(PART_PARAM, "snippet")
                 .appendQueryParameter(CHANNELID_PARAM, "UCaSAM5kna2KyX-uVLSGr8PQ")
@@ -63,7 +69,7 @@ public class YouTubeConnectorToday extends YouTubeConnector {
     }
 
 
-    public class DownloadJsonData extends DownloadRawData {
+    public class DownloadJsonData extends AsyncTask<String, Void, String> {
 
         public DownloadJsonData() {
         }
@@ -72,25 +78,74 @@ public class YouTubeConnectorToday extends YouTubeConnector {
         protected void onPostExecute(String s) {
             Log.e(LOG_TAG, "Video onPostExecute ");
             super.onPostExecute(s);
-            processResult();
+
+
+        }
+
+
+        public String download(String urlString) {
+            Log.e(LOG_TAG, "Download Video to Notification ");
+            StringBuffer buffer = new StringBuffer();
+            HttpURLConnection urlConnection = null;
+            BufferedReader reader = null;
+
+
+            try {
+                URL url = new URL(urlString);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
+
+                InputStream i = urlConnection.getInputStream();
+                if (i == null) {
+                    return null;
+                }
+
+
+                reader = new BufferedReader(new InputStreamReader(i));
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    buffer.append(line + "\n");
+                }
+
+                return buffer.toString();
+
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Error", e);
+
+
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (final IOException e) {
+                        Log.e(LOG_TAG, "Error closing stream", e);
+                    }
+
+                }
+            }
+            return buffer.toString();
 
         }
 
 
         @Override
         protected String doInBackground(String... params) {
-            String[] param = {getMyDestinationURI().toString()};
-            return super.doInBackground(param);
+            String url = getMyDestinationURI().toString();
+            String result=download(url);
+            processResult(result);
+            return "";
         }
 
 
     }
 
-    public void processResult() {
-        if (getmDownloadStatus() != DownLoadStatus.OK) {
-            Log.e(LOG_TAG, "Error downloading Raw File ");
-            return;
-        }
+    public void processResult(String result) {
+
 
         final String YOUTUBE_ITEMS = "items";
         final String YOUTUBE_SNIPPET = "snippet";
@@ -103,7 +158,7 @@ public class YouTubeConnectorToday extends YouTubeConnector {
 
 
         try {
-            JSONObject jsonObject = new JSONObject(getmData());
+            JSONObject jsonObject = new JSONObject(result);
             JSONArray itemsArray = jsonObject.getJSONArray(YOUTUBE_ITEMS);
             if (itemsArray.length() > 0) {
                 VideoTemp.setVideosNotification(new ArrayList<Video>());
