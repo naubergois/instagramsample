@@ -10,10 +10,6 @@ import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 
 
@@ -67,8 +63,8 @@ public class OmeleteSchedulingService extends IntentService {
                 List<Video> videos = getVideos();
                 for (Video video : videos
                         ) {
-                    fig=getBitmapFromURL(video.getUrl());
-                    sendNotification("Novo vídeo do Omelete " + video.getTitle(), video);
+//                    fig=getBitmapFromURL(video.getUrl());
+                    sendNotification(video.getTitle(), video);
                 }
 
 
@@ -88,42 +84,39 @@ public class OmeleteSchedulingService extends IntentService {
                         new Intent(getApplicationContext(), YouTubeListActivity.class), 0);
 
                 NotificationCompat.Builder mBuilder;
-                if (fig!=null) {
+
 
                     mBuilder =
                             new NotificationCompat.Builder(getApplicationContext())
                                     .setSmallIcon(R.drawable.logo)
+                                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.logo))
                                     .setContentTitle(getString(R.string.novovideo))
-                                    .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(fig))
-                                    .setContentText(msg);
-                }else{
-                    mBuilder =
-                            new NotificationCompat.Builder(getApplicationContext())
-                                    .setSmallIcon(R.drawable.logo)
-                                    .setContentTitle(getString(R.string.novovideo))
-                                    .setStyle(new NotificationCompat.BigTextStyle())
+                                    .setStyle(new NotificationCompat.BigPictureStyle().bigLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.logo)))
                                     .setContentText(msg);
 
-                }
+
+
 
                 mBuilder.setContentIntent(contentIntent);
                 mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
             }
 
-            public Bitmap getBitmapFromURL(String src) {
-                try {
-                    URL url = new URL(src);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setDoInput(true);
-                    connection.connect();
-                    InputStream input = connection.getInputStream();
-                    Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                    return myBitmap;
-                } catch (IOException e) {
-                    Log.e(LOG_TAG, e.getMessage());
-                }
-                return null;
-            }
+//            public Bitmap getBitmapFromURL(String src) {
+//                try {
+//                    URL url = new URL(src);
+//                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//                    connection.setDoInput(true);
+//                    connection.connect();
+//                    InputStream input = connection.getInputStream();
+//                    Bitmap myBitmap = BitmapFactory.decodeStream(input);
+//                    return myBitmap;
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }catch (NetworkOnMainThreadException e){
+//                    e.printStackTrace();
+//                }
+//                return null;
+//            }
 
         }
     }
