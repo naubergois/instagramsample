@@ -158,50 +158,52 @@ public class YouTubeConnectorToday extends YouTubeConnector {
 
 
         try {
-            JSONObject jsonObject = new JSONObject(result);
-            JSONArray itemsArray = jsonObject.getJSONArray(YOUTUBE_ITEMS);
-            if (itemsArray.length() > 0) {
-                VideoTemp.setVideosNotification(new ArrayList<Video>());
-            }
-            for (int i = 0; i < itemsArray.length(); i++) {
-                JSONObject jsonVideo = itemsArray.getJSONObject(i);
+            if (result!=null) {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray itemsArray = jsonObject.getJSONArray(YOUTUBE_ITEMS);
+                if (itemsArray.length() > 0) {
+                    VideoTemp.setVideosNotification(new ArrayList<Video>());
+                }
+                for (int i = 0; i < itemsArray.length(); i++) {
+                    JSONObject jsonVideo = itemsArray.getJSONObject(i);
 
-                String snippet = jsonVideo.getString(YOUTUBE_SNIPPET);
+                    String snippet = jsonVideo.getString(YOUTUBE_SNIPPET);
 
-                String id = null;
-                JSONObject jsonId = jsonVideo.getJSONObject(YOUTUBE_ID);
-                if (jsonId.has(YOUTUBE_VIDEOID)) {
-                    id = jsonId.getString(YOUTUBE_VIDEOID);
+                    String id = null;
+                    JSONObject jsonId = jsonVideo.getJSONObject(YOUTUBE_ID);
+                    if (jsonId.has(YOUTUBE_VIDEOID)) {
+                        id = jsonId.getString(YOUTUBE_VIDEOID);
+                    }
+
+                    JSONObject jsonSnippet = jsonVideo.getJSONObject(YOUTUBE_SNIPPET);
+
+
+                    String title = jsonSnippet.getString(YOUTUBE_TITLE);
+
+                    JSONObject jsonTHUMBNAILS = jsonSnippet.getJSONObject(YOUTUBE_THUMBNAILS);
+                    JSONObject jsonHigh = jsonTHUMBNAILS.getJSONObject(YOUTUBE_HIGH);
+
+
+                    String url = jsonHigh.getString(YOUTUBE_URL);
+
+                    if (id != null) {
+
+                        Video video = new Video();
+                        video.setTitle(title);
+                        video.setUrl(url);
+                        video.setId(id);
+
+
+                        VideoTemp.getVideosNotification().add(video);
+                    }
+
+
                 }
 
-                JSONObject jsonSnippet = jsonVideo.getJSONObject(YOUTUBE_SNIPPET);
+                for (Video singlePhoto : VideoTemp.getVideosNotification()) {
+                    Log.v(LOG_TAG, singlePhoto.toString());
 
-
-                String title = jsonSnippet.getString(YOUTUBE_TITLE);
-
-                JSONObject jsonTHUMBNAILS = jsonSnippet.getJSONObject(YOUTUBE_THUMBNAILS);
-                JSONObject jsonHigh = jsonTHUMBNAILS.getJSONObject(YOUTUBE_HIGH);
-
-
-                String url = jsonHigh.getString(YOUTUBE_URL);
-
-                if (id != null) {
-
-                    Video video = new Video();
-                    video.setTitle(title);
-                    video.setUrl(url);
-                    video.setId(id);
-
-
-                    VideoTemp.getVideosNotification().add(video);
                 }
-
-
-            }
-
-            for (Video singlePhoto : VideoTemp.getVideosNotification()) {
-                Log.v(LOG_TAG, singlePhoto.toString());
-
             }
 
         } catch (JSONException e) {

@@ -111,10 +111,9 @@ public class OmeleteSchedulingService extends IntentService {
                     mBuilder =
                             new NotificationCompat.Builder(getApplicationContext())
                                     .setSmallIcon(R.drawable.logo)
-                                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
                                     .setContentTitle(video.getTitle())
-                                    .setStyle(new NotificationCompat.BigPictureStyle().bigLargeIcon(fig).bigPicture(fig).setSummaryText(video.getTitle()))
-                                    .setContentText(video.getDescription());
+                                    .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(fig).setBigContentTitle(video.getTitle()))
+                    ;
 
                 }
 
