@@ -19,10 +19,10 @@ public class FlickrRecyclerViewAdapter extends RecyclerView.Adapter<FlickrImageV
     private Context mContext;
     Activity activity;
 
-    public FlickrRecyclerViewAdapter(List<Photo> photoList, Context mContext,Activity activity) {
+    public FlickrRecyclerViewAdapter(List<Photo> photoList, Context mContext, Activity activity) {
         this.photoList = photoList;
         this.mContext = mContext;
-        this.activity=activity;
+        this.activity = activity;
     }
 
     @Override
@@ -30,17 +30,21 @@ public class FlickrRecyclerViewAdapter extends RecyclerView.Adapter<FlickrImageV
         Photo item = photoList.get(position);
         //Toast.makeText(null," teste "+item.getmTitle()+ " ",Toast.LENGTH_LONG).show();
 
-        Picasso.with(mContext).load(item.getmImage()).error(R.drawable.placeholder).into(holder.thumbnail);
+        if (item != null) {
+            if (holder!=null) {
+
+                Picasso.with(mContext).load(item.getmImage()).error(R.drawable.placeholder).into(holder.thumbnail);
 
 //        Uri uri = Uri.parse(item.getmImage());
 //        SimpleDraweeView draweeView = (SimpleDraweeView) activity.findViewById(R.id.thumbnail);
 //        draweeView.setImageURI(uri);
 
 
-
-        holder.title.setText(item.getmImage());
-        //holder.title.setBackground(holder.thumbnail.getDrawable());
+                holder.title.setText(item.getmImage());
+                //holder.title.setBackground(holder.thumbnail.getDrawable());
 //        holder.tags.setText(item.getmTags());
+            }
+        }
 
     }
 

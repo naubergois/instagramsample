@@ -9,4 +9,5 @@
     <string name="title_activity_view_video_detail">ViewVideoDetail</string>
     <string name="title_activity_web">WebActivity</string>
     <string name="title_activity_video_web">VideoWebActivity</string>
+    <string name="novovideo">Novo vídeo</string>
 </resources>

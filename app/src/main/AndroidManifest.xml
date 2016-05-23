@@ -10,6 +10,8 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"></uses-permission>
 
     <application
         android:name=".MyAppClass"
@@ -85,6 +87,17 @@
             android:launchMode="singleTop"
             android:label="@string/title_activity_video_web"
             android:theme="@style/AppTheme"></activity>
+        <receiver android:name=".OmeleteAlarmReicever"></receiver>
+
+        <receiver android:name=".OmeleteBootReicever"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+        <service android:name=".OmeleteSchedulingService" />
     </application>
 
 </manifest>
